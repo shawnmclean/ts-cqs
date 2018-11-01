@@ -1,0 +1,29 @@
+{
+  "name": "ts-cqs",
+  "version": "1.0.0",
+  "description": "Lightweight Command and Query Separation library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shawnmclean/ts-cqs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shawnmclean/ts-cqs/issues"
+  },
+  "homepage": "https://github.com/shawnmclean/ts-cqs#readme",
+  "devDependencies": {
+    "@types/jest": "^23.3.9",
+    "@types/node": "^10.12.2",
+    "jest": "^23.6.0",
+    "prettier": "^1.14.3",
+    "pretty-quick": "^1.8.0",
+    "ts-jest": "^23.10.4",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.6"
+  }
+}
