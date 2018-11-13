@@ -1,14 +1,19 @@
+import 'reflect-metadata'
 import { ICommand } from './ICommand'
-import { ICommandHandler } from './ICommandHandler'
 import { ICommandProcessor } from './ICommandProcessor'
+import { COMMAND_HANDLER_METADATA } from '../constants'
+
+import { Container } from 'inversify'
+import { ICommandHandler } from './ICommandHandler'
 
 export class CommandProcessor implements ICommandProcessor {
-  execute<T extends ICommand>(command: T): Promise<any> {
-    throw new Error('Method not implemented.')
-  }
+  constructor(private container: Container) {}
 
-  private getCommandName(command: ICommand): string {
-    const { constructor } = Object.getPrototypeOf(command)
-    return constructor.name as string
+  execute<T extends ICommand>(command: T): Promise<any> {
+    const handlerType = Reflect.getMetadata(COMMAND_HANDLER_METADATA, command)
+
+    const handler = this.container.resolve(handlerType) as ICommandHandler<T>
+
+    return handler.execute(command)
   }
 }
