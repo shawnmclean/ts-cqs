@@ -1,6 +1,8 @@
 [![CircleCI](https://circleci.com/gh/shawnmclean/ts-cqs.svg?style=svg)](https://circleci.com/gh/shawnmclean/ts-cqs)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/a072ff400fbfd20fab21/test_coverage)](https://codeclimate.com/github/shawnmclean/ts-cqs/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a072ff400fbfd20fab21/maintainability)](https://codeclimate.com/github/shawnmclean/ts-cqs/maintainability)
+[![npm version](https://badge.fury.io/js/ts-cqs.svg)](https://badge.fury.io/js/ts-cqs)
+[![Known Vulnerabilities](https://snyk.io/test/github/shawnmclean/ts-cqs/badge.svg?targetFile=package.json)](https://snyk.io/test/github/shawnmclean/ts-cqs?targetFile=package.json)
 
 # ts-cqs
 
