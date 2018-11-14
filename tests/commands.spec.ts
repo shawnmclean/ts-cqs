@@ -10,7 +10,7 @@ import {
 
 namespace Commands {
   export class TestCommand implements ICommand {
-    constructor(public val: string) {}
+    constructor(public readonly val: string) {}
   }
 
   @injectable()
@@ -22,7 +22,7 @@ namespace Commands {
   }
 
   export class TestCommandCopy implements ICommand {
-    constructor(public val: string) {}
+    constructor(public readonly val: string) {}
   }
 
   @injectable()
@@ -35,7 +35,7 @@ namespace Commands {
   }
 }
 
-describe('CommandProcessor', () => {
+describe('commands', () => {
   describe('when inversify bindings are setup', () => {
     let container: Container
 
