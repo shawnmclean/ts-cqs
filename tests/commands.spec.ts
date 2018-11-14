@@ -1,12 +1,13 @@
+import { Container, injectable } from 'inversify'
 import 'reflect-metadata'
+
 import {
   ICommand,
   ICommandHandler,
   CommandHandler,
   CommandProcessor
-} from './index'
+} from '../src/commands'
 
-import { Container, injectable } from 'inversify'
 namespace Commands {
   export class TestCommand implements ICommand {
     constructor(public val: string) {}
