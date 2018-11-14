@@ -31,7 +31,7 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - npm-dependencies-
 
-      - run: yarn install
+      - run: npm install
 
       - run:
           name: Install Code Climate Test Reporter
@@ -43,13 +43,12 @@ jobs:
           name: Run Tests
           command: |
             ./cc-test-reporter before-build
-            yarn test
+            npm run test
             ./cc-test-reporter after-build --exit-code $?
 
-      - run: yarn build
-
-      - store_artifacts:
-          path: ./dist
+      - run:
+          name: Run build
+          command: npm run build
 
       - save_cache:
           name: Save npm packages to cache
@@ -60,14 +59,32 @@ jobs:
   deploy:
     working_directory: *workspace_root
     docker:
-      - image: cibuilds/github:0.12
+      - image: cibuilds/node:8.10
 
     steps:
       - *attach_workspace
 
-    
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+
+      - run:
+          name: Publish package
+          command: npm publish
+
 workflows:
   version: 2
-  build_and_test:
+  build_test_and_deploy:
     jobs:
-      - build_and_test
+      - build_and_test:
+          filters:
+            tags:
+              only: /^v.*/
+      - deploy:
+          requires:
+            - build_and_test
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
