@@ -60,6 +60,8 @@ const container = new Container()
 container.bind(TestCommandHandler).toSelf()
 ```
 
+The inversify binding here uses the handler class as the id. See [docs](https://github.com/inversify/InversifyJS/blob/master/wiki/classes_as_id.md)
+
 ```typescript
 // SomeConsumerClass.ts
 
