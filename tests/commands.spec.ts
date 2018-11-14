@@ -20,6 +20,19 @@ namespace Commands {
       return Promise.resolve(command.val)
     }
   }
+
+  export class TestCommandCopy implements ICommand {
+    constructor(public val: string) {}
+  }
+
+  @injectable()
+  @CommandHandler(TestCommandCopy)
+  export class TestCommandHandlerCopy
+    implements ICommandHandler<TestCommandCopy> {
+    async execute(command: TestCommandCopy): Promise<string> {
+      return Promise.resolve(command.val + ' copy')
+    }
+  }
 }
 
 describe('CommandProcessor', () => {
@@ -39,6 +52,16 @@ describe('CommandProcessor', () => {
       const result = await commandProcessor.execute(command)
 
       expect(result).toBe(expectedVal)
+    })
+
+    it('should execute the correct handler for the command copy', async () => {
+      const expectedVal = 'test-val'
+      const command = new Commands.TestCommandCopy(expectedVal)
+
+      const commandProcessor = new CommandProcessor(container)
+      const result = await commandProcessor.execute(command)
+
+      expect(result).toBe(expectedVal + ' copy')
     })
   })
 })
