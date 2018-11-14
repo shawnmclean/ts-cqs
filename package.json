@@ -1,8 +1,9 @@
 {
   "name": "ts-cqs",
-  "version": "1.0.0",
-  "description": "Lightweight Command and Query Separation library",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "Lightweight Command and Query Separation library (NOT CQRS)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
     "build": "tsc"
@@ -11,7 +12,16 @@
     "type": "git",
     "url": "git+https://github.com/shawnmclean/ts-cqs.git"
   },
-  "author": "",
+  "keywords": [
+    "cqs",
+    "cqrs",
+    "typescript",
+    "inversify",
+    "inversifyJs",
+    "command",
+    "query"
+  ],
+  "author": "Shawn Mclean",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/shawnmclean/ts-cqs/issues"
@@ -25,14 +35,14 @@
     "pretty-quick": "^1.8.0",
     "ts-jest": "^23.10.4",
     "tslint": "^5.11.0",
-    "typescript": "^3.1.6"
+    "typescript": "^3.1.6",
+    "reflect-metadata": "^0.1.12"
+  },
+  "peerDependencies": {
+    "inversify": "^5.0.1"
   },
   "prettier": {
     "semi": false,
     "singleQuote": true
-  },
-  "dependencies": {
-    "inversify": "^5.0.1",
-    "reflect-metadata": "^0.1.12"
   }
 }
