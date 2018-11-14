@@ -1,6 +1,6 @@
 {
   "name": "ts-cqs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Lightweight Command and Query Separation library (NOT CQRS)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
