@@ -44,7 +44,7 @@ export class TestCommand implements ICommand {
 @injectable()
 @CommandHandler(TestCommand)
 export class TestCommandHandler implements ICommandHandler<TestCommand> {
-  async execute(command: TestCommand): Promise<string> {
+  async handle(command: TestCommand): Promise<string> {
     return Promise.resolve(command.val)
   }
 }

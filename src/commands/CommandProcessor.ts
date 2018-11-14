@@ -14,6 +14,6 @@ export class CommandProcessor implements ICommandProcessor {
 
     const handler = this.container.resolve(handlerType) as ICommandHandler<T>
 
-    return handler.execute(command)
+    return handler.handle(command)
   }
 }

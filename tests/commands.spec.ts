@@ -16,7 +16,7 @@ namespace Commands {
   @injectable()
   @CommandHandler(TestCommand)
   export class TestCommandHandler implements ICommandHandler<TestCommand> {
-    async execute(command: TestCommand): Promise<string> {
+    async handle(command: TestCommand): Promise<string> {
       return Promise.resolve(command.val)
     }
   }
@@ -29,7 +29,7 @@ namespace Commands {
   @CommandHandler(TestCommandCopy)
   export class TestCommandHandlerCopy
     implements ICommandHandler<TestCommandCopy> {
-    async execute(command: TestCommandCopy): Promise<string> {
+    async handle(command: TestCommandCopy): Promise<string> {
       return Promise.resolve(command.val + ' copy')
     }
   }
