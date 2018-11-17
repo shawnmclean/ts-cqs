@@ -5,32 +5,36 @@ import {
   ICommand,
   ICommandHandler,
   CommandHandler,
-  CommandProcessor
+  CommandProcessor,
+  ICommandProcessor
 } from '../src/commands'
 
 namespace Commands {
-  export class TestCommand implements ICommand {
+  export class TestCommand implements ICommand<string> {
     constructor(public readonly val: string) {}
   }
 
   @injectable()
   @CommandHandler(TestCommand)
-  export class TestCommandHandler implements ICommandHandler<TestCommand> {
-    async handle(command: TestCommand): Promise<string> {
-      return Promise.resolve(command.val)
+  export class TestCommandHandler implements ICommandHandler<TestCommand, string> {
+    handle(command: TestCommand): string {
+      return command.val
     }
   }
 
-  export class TestCommandCopy implements ICommand {
+  export class PromisedCommandResult {
+    constructor(public id: string){}
+  } 
+  export class PromisedCommand implements ICommand<Promise<PromisedCommandResult>> {
     constructor(public readonly val: string) {}
   }
 
   @injectable()
-  @CommandHandler(TestCommandCopy)
-  export class TestCommandHandlerCopy
-    implements ICommandHandler<TestCommandCopy> {
-    async handle(command: TestCommandCopy): Promise<string> {
-      return Promise.resolve(command.val + ' copy')
+  @CommandHandler(PromisedCommand)
+  export class PromisedCommandHandler
+    implements ICommandHandler<PromisedCommand, Promise<PromisedCommandResult>> {
+    async handle(command: PromisedCommand): Promise<PromisedCommandResult> {
+      return Promise.resolve(new PromisedCommandResult(command.val))
     }
   }
 }
@@ -38,30 +42,34 @@ namespace Commands {
 describe('commands', () => {
   describe('when inversify bindings are setup', () => {
     let container: Container
+    let commandProcessor: ICommandProcessor
 
     beforeEach(() => {
       container = new Container()
       container.bind(Commands.TestCommandHandler).toSelf()
+      container.bind(Commands.PromisedCommandHandler).toSelf()
+
+      commandProcessor = new CommandProcessor(container)
     })
 
-    it('should execute the correct handler for the command', async () => {
+    it('should execute the correct handler for the command', () => {
       const expectedVal = 'test-val'
       const command = new Commands.TestCommand(expectedVal)
 
-      const commandProcessor = new CommandProcessor(container)
-      const result = await commandProcessor.execute(command)
+      const result = commandProcessor.execute(command)
 
       expect(result).toBe(expectedVal)
     })
 
-    it('should execute the correct handler for the command copy', async () => {
-      const expectedVal = 'test-val'
-      const command = new Commands.TestCommandCopy(expectedVal)
-
-      const commandProcessor = new CommandProcessor(container)
-      const result = await commandProcessor.execute(command)
-
-      expect(result).toBe(expectedVal + ' copy')
+    describe('when command result is a promise', () => {
+      it('should execute the correct handler for the command copy', async () => {
+        const expectedVal = 'test-val'
+        const command = new Commands.PromisedCommand(expectedVal)
+  
+        const result = await commandProcessor.execute(command) as Commands.PromisedCommandResult
+  
+        expect(result.id).toBe(expectedVal)
+      })
     })
   })
 })

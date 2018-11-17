@@ -1,5 +1,5 @@
 import { ICommand } from './ICommand'
 
 export interface ICommandProcessor {
-  execute<T extends ICommand>(command: T): Promise<any>
+  execute<TCommand extends ICommand<TResult>, TResult>(command: TCommand): TResult
 }

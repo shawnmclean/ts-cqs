@@ -1,1 +1,1 @@
-export interface ICommand {}
+export interface ICommand<_Result> {}
