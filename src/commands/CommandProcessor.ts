@@ -9,10 +9,10 @@ import { ICommandHandler } from './ICommandHandler'
 export class CommandProcessor implements ICommandProcessor {
   constructor(private container: Container) {}
 
-  execute<TCommand extends ICommand<TResult>, TResult>(command: TCommand): TResult {
+  execute<TResult>(command: ICommand<TResult>): TResult {
     const handlerType = Reflect.getMetadata(COMMAND_HANDLER_METADATA, command)
 
-    const handler = this.container.resolve(handlerType) as ICommandHandler<TCommand, TResult>
+    const handler = this.container.resolve(handlerType) as ICommandHandler<ICommand<TResult>, TResult>
 
     return handler.handle(command)
   }

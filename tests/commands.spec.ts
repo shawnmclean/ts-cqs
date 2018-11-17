@@ -56,7 +56,7 @@ describe('commands', () => {
       const expectedVal = 'test-val'
       const command = new Commands.TestCommand(expectedVal)
 
-      const result = commandProcessor.execute(command)
+      const result = commandProcessor.execute<string>(command)
 
       expect(result).toBe(expectedVal)
     })
@@ -66,7 +66,7 @@ describe('commands', () => {
         const expectedVal = 'test-val'
         const command = new Commands.PromisedCommand(expectedVal)
   
-        const result = await commandProcessor.execute(command) as Commands.PromisedCommandResult
+        const result = await commandProcessor.execute<Promise<Commands.PromisedCommandResult>>(command)
   
         expect(result.id).toBe(expectedVal)
       })
