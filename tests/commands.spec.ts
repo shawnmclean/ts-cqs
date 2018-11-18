@@ -7,7 +7,7 @@ import {
   CommandHandler,
   CommandProcessor,
   ICommandProcessor
-} from '../src/commands'
+} from '../src'
 
 namespace Commands {
   export class TestCommand implements ICommand<string> {
