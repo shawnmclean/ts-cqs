@@ -3,9 +3,10 @@ import { ICommand } from './ICommand'
 import { ICommandProcessor } from './ICommandProcessor'
 import { COMMAND_HANDLER_METADATA } from '../constants'
 
-import { Container } from 'inversify'
+import { Container, injectable } from 'inversify'
 import { ICommandHandler } from './ICommandHandler'
 
+@injectable()
 export class CommandProcessor implements ICommandProcessor {
   constructor(private container: Container) {}
 

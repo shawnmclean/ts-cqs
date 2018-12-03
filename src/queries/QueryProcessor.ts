@@ -3,9 +3,10 @@ import { IQuery } from './IQuery'
 import { IQueryProcessor } from './IQueryProcessor'
 import { QUERY_HANDLER_METADATA } from '../constants'
 
-import { Container } from 'inversify'
+import { Container, injectable } from 'inversify'
 import { IQueryHandler } from './IQueryHandler'
 
+@injectable()
 export class QueryProcessor implements IQueryProcessor {
   constructor(private container: Container) {}
 
