@@ -14,7 +14,7 @@ Light Command and Query Separation framework for typescript that uses inversify 
 
 Following the single responsibility principle, the command and query separation pattern works well. This library sets out to provide a framework in to replicate the CQS pattern in typescript that uses the dependency injection framework [InversifyJs](https://github.com/inversify/InversifyJS).
 
-There are CQRS libraries such as [NestJS/CQRS](https://github.com/nestjs/cqrs) that provides a framework for this pattern. However, it adheres more to the CQRS pattern with event sourcing and uses the bus (command/query processor) as a way to wire up the dependency injection. This library seeks to use a single place for wiring up dependencies.
+There are CQRS libraries such as [NestJS/CQRS](https://github.com/nestjs/cqrs) that provides a framework for this pattern. However, it adheres more to the CQRS pattern with event sourcing and uses the bus (command/query processor) as a way to wire up the dependency injection. This library allows you to wire up the dependencies outside of the processors.
 
 ## Installation
 
