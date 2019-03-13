@@ -13,7 +13,10 @@ export class CommandProcessor implements ICommandProcessor {
   execute<TResult>(command: ICommand<TResult>): TResult {
     const handlerType = Reflect.getMetadata(COMMAND_HANDLER_METADATA, command)
 
-    const handler = this.container.resolve(handlerType) as ICommandHandler<ICommand<TResult>, TResult>
+    const handler = this.container.get(handlerType) as ICommandHandler<
+      ICommand<TResult>,
+      TResult
+    >
 
     return handler.handle(command)
   }

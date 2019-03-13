@@ -13,7 +13,10 @@ export class QueryProcessor implements IQueryProcessor {
   execute<TResult>(query: IQuery<TResult>): TResult {
     const handlerType = Reflect.getMetadata(QUERY_HANDLER_METADATA, query)
 
-    const handler = this.container.resolve(handlerType) as IQueryHandler<IQuery<TResult>, TResult>
+    const handler = this.container.get(handlerType) as IQueryHandler<
+      IQuery<TResult>,
+      TResult
+    >
 
     return handler.handle(query)
   }

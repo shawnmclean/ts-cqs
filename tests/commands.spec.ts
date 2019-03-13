@@ -16,23 +16,26 @@ namespace Commands {
 
   @injectable()
   @CommandHandler(TestCommand)
-  export class TestCommandHandler implements ICommandHandler<TestCommand, string> {
+  export class TestCommandHandler
+    implements ICommandHandler<TestCommand, string> {
     handle(command: TestCommand): string {
       return command.val
     }
   }
 
   export class PromisedCommandResult {
-    constructor(public id: string){}
-  } 
-  export class PromisedCommand implements ICommand<Promise<PromisedCommandResult>> {
+    constructor(public id: string) {}
+  }
+  export class PromisedCommand
+    implements ICommand<Promise<PromisedCommandResult>> {
     constructor(public readonly val: string) {}
   }
 
   @injectable()
   @CommandHandler(PromisedCommand)
   export class PromisedCommandHandler
-    implements ICommandHandler<PromisedCommand, Promise<PromisedCommandResult>> {
+    implements
+      ICommandHandler<PromisedCommand, Promise<PromisedCommandResult>> {
     async handle(command: PromisedCommand): Promise<PromisedCommandResult> {
       return Promise.resolve(new PromisedCommandResult(command.val))
     }
@@ -46,6 +49,7 @@ describe('commands', () => {
 
     beforeEach(() => {
       container = new Container()
+      container.bind(Container).toConstantValue(container)
       container.bind(Commands.TestCommandHandler).toSelf()
       container.bind(Commands.PromisedCommandHandler).toSelf()
 
@@ -65,9 +69,11 @@ describe('commands', () => {
       it('should execute the correct handler for the command copy', async () => {
         const expectedVal = 'test-val'
         const command = new Commands.PromisedCommand(expectedVal)
-  
-        const result = await commandProcessor.execute<Promise<Commands.PromisedCommandResult>>(command)
-  
+
+        const result = await commandProcessor.execute<
+          Promise<Commands.PromisedCommandResult>
+        >(command)
+
         expect(result.id).toBe(expectedVal)
       })
     })

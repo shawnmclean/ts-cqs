@@ -1,6 +1,6 @@
 {
   "name": "ts-cqs",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Lightweight Command and Query Separation library",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -36,8 +36,7 @@
     "ts-jest": "^23.10.4",
     "tslint": "^5.11.0",
     "typescript": "^3.1.6",
-    "reflect-metadata": "^0.1.12",
-    "inversify": "^5.0.1"
+    "reflect-metadata": "^0.1.12"
   },
   "dependencies": {
     "inversify": "^5.0.1"
