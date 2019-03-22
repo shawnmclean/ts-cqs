@@ -1,1 +1,3 @@
-export interface ICommand<_Result> {}
+export interface ICommand<Result> {
+  resultType?: Result
+}

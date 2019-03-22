@@ -11,6 +11,7 @@ import {
 
 namespace Commands {
   export class TestCommand implements ICommand<string> {
+    resultType!: string
     constructor(public readonly val: string) {}
   }
 
@@ -18,26 +19,25 @@ namespace Commands {
   @CommandHandler(TestCommand)
   export class TestCommandHandler
     implements ICommandHandler<TestCommand, string> {
-    handle(command: TestCommand): string {
+    async handle(command: TestCommand): Promise<string> {
       return command.val
     }
   }
 
-  export class PromisedCommandResult {
+  export class Command2Result {
     constructor(public id: string) {}
   }
-  export class PromisedCommand
-    implements ICommand<Promise<PromisedCommandResult>> {
+  export class Command2 implements ICommand<Command2Result> {
+    resultType!: Command2Result
     constructor(public readonly val: string) {}
   }
 
   @injectable()
-  @CommandHandler(PromisedCommand)
-  export class PromisedCommandHandler
-    implements
-      ICommandHandler<PromisedCommand, Promise<PromisedCommandResult>> {
-    async handle(command: PromisedCommand): Promise<PromisedCommandResult> {
-      return Promise.resolve(new PromisedCommandResult(command.val))
+  @CommandHandler(Command2)
+  export class Command2Handler
+    implements ICommandHandler<Command2, Command2Result> {
+    async handle(command: Command2): Promise<Command2Result> {
+      return Promise.resolve(new Command2Result(command.val))
     }
   }
 }
@@ -49,33 +49,19 @@ describe('commands', () => {
 
     beforeEach(() => {
       container = new Container()
-      container.bind(Container).toConstantValue(container)
       container.bind(Commands.TestCommandHandler).toSelf()
-      container.bind(Commands.PromisedCommandHandler).toSelf()
+      container.bind(Commands.Command2Handler).toSelf()
 
       commandProcessor = new CommandProcessor(container)
     })
 
-    it('should execute the correct handler for the command', () => {
+    it('should execute the correct handler for the command', async () => {
       const expectedVal = 'test-val'
       const command = new Commands.TestCommand(expectedVal)
 
-      const result = commandProcessor.execute<string>(command)
+      const result = await commandProcessor.execute(command)
 
       expect(result).toBe(expectedVal)
-    })
-
-    describe('when command result is a promise', () => {
-      it('should execute the correct handler for the command copy', async () => {
-        const expectedVal = 'test-val'
-        const command = new Commands.PromisedCommand(expectedVal)
-
-        const result = await commandProcessor.execute<
-          Promise<Commands.PromisedCommandResult>
-        >(command)
-
-        expect(result.id).toBe(expectedVal)
-      })
     })
   })
 })
