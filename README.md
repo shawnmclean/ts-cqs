@@ -37,7 +37,7 @@ import 'reflect-metadata'
 import { injectable } from 'inversify'
 import { ICommand, ICommandHandler, CommandHandler } from 'ts-cqs'
 
-export class TestCommand implements ICommand {
+export class TestCommand implements ICommand<string> {
   constructor(public readonly val: string) {}
 }
 
@@ -45,7 +45,7 @@ export class TestCommand implements ICommand {
 @CommandHandler(TestCommand)
 export class TestCommandHandler implements ICommandHandler<TestCommand> {
   async handle(command: TestCommand): Promise<string> {
-    return Promise.resolve(command.val)
+    return command.val
   }
 }
 ```
@@ -81,10 +81,6 @@ export class SomeConsumerClass {
   }
 }
 ```
-
-### Queries
-
-In development
 
 ## Contributing
 
