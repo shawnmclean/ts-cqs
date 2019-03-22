@@ -33,10 +33,10 @@
     "jest": "^23.6.0",
     "prettier": "^1.14.3",
     "pretty-quick": "^1.8.0",
+    "reflect-metadata": "^0.1.12",
     "ts-jest": "^23.10.4",
     "tslint": "^5.11.0",
-    "typescript": "^3.1.6",
-    "reflect-metadata": "^0.1.12"
+    "typescript": "^3.3.4000"
   },
   "dependencies": {
     "inversify": "^5.0.1"
